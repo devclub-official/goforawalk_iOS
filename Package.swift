@@ -20,3 +20,4 @@ let package = Package(
     name: "Package",
     dependencies: []
 )
+        .package(url: "https://github.com/pointfreeco/swift-composable-architecture.git", from: "1.19.0"),
