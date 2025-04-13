@@ -18,6 +18,10 @@ let packageSetting = PackageSettings(
 
 let package = Package(
     name: "Package",
-    dependencies: []
+    dependencies: [
+        .package(
+            url: "https://github.com/pointfreeco/swift-composable-architecture.git",
+            .upToNextMajor(from: "1.19.0")
+        ),
+    ]
 )
-        .package(url: "https://github.com/pointfreeco/swift-composable-architecture.git", from: "1.19.0"),
