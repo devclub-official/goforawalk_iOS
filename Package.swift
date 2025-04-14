@@ -23,5 +23,9 @@ let package = Package(
             url: "https://github.com/pointfreeco/swift-composable-architecture.git",
             .upToNextMajor(from: "1.19.0")
         ),
+        .package(
+            url: "https://github.com/kakao/kakao-ios-sdk.git", 
+            .upToNextMajor(from: "2.24.0")
+        )
     ]
 )
