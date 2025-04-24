@@ -7,18 +7,25 @@ let project = Project.module(
     targets: [
         .interface(
             module: .core(.Network),
+            dependencies: []
+        ),
+        .implements(
+            module: .core(.Network),
             dependencies: [
-                .shared(target: .Util, type: .sources)
+                .core(target: .Network, type: .interface)
             ]
-                  ),
-        .implements(module: .core(.Network), dependencies: [
-            .core(target: .Network, type: .interface)
-        ]),
-        .testing(module: .core(.Network), dependencies: [
-            .core(target: .Network, type: .interface)
-        ]),
-        .tests(module: .core(.Network), dependencies: [
-            .core(target: .Network)
-        ])
+        ),
+        .testing(
+            module: .core(.Network),
+            dependencies: [
+                .core(target: .Network, type: .interface)
+            ]
+        ),
+        .tests(
+            module: .core(.Network),
+            dependencies: [
+                .core(target: .Network)
+            ]
+        )
     ]
 )

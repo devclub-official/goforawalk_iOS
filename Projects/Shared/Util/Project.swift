@@ -5,7 +5,11 @@ import ProjectDescriptionHelpers
 let project = Project.module(
     name: ModulePaths.Shared.Util.rawValue,
     targets: [
-        .implements(module: .shared(.Util), product: .framework, dependencies: [])
+        .implements(
+            module: .shared(.Util),
+            product: .framework,
+            dependencies: []
+        )
     ]
 )
 
