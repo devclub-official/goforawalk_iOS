@@ -12,7 +12,8 @@ let project = Project.module(
         .implements(
             module: .core(.Network),
             dependencies: [
-                .core(target: .Network, type: .interface)
+                .core(target: .Network, type: .interface),
+                .shared(target: .Util)
             ]
         ),
         .testing(

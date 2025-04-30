@@ -8,14 +8,14 @@ let project = Project.module(
         .interface(
             module: .domain(.Auth),
             dependencies: [
-                .core(target: .Network, type: .interface),
-                .shared(target: .GlobalThirdPartyLibrary, type: .sources)
+                .domain(target: .BaseDomain, type: .interface),
             ]
         ),
         .implements(
             module: .domain(.Auth),
             dependencies: [
-                .domain(target: .Auth, type: .interface)
+                .domain(target: .Auth, type: .interface),
+                .domain(target: .BaseDomain)
             ]
         ),
         .testing(

@@ -5,9 +5,20 @@ import ProjectDescriptionHelpers
 let project = Project.module(
     name: ModulePaths.Domain.BaseDomain.rawValue,
     targets: [
+        .interface(
+            module: .domain(.BaseDomain),
+            dependencies: [
+                .shared(target: .GlobalThirdPartyLibrary)
+            ]
+        ),
         .implements(
             module: .domain(.BaseDomain),
-            dependencies: []
+            dependencies: [
+                .domain(target: .BaseDomain, type: .interface),
+                .core(target: .Network, type: .interface),
+                .shared(target: .Util),
+                .shared(target: .GlobalThirdPartyLibrary)
+            ]
         ),
         .tests(
             module: .domain(.BaseDomain),

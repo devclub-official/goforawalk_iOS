@@ -1,4 +1,4 @@
-// swift-tools-version:5.7
+// swift-tools-version:6.0
 import PackageDescription
 
 #if TUIST
@@ -25,7 +25,7 @@ let package = Package(
         ),
         .package(
             url: "https://github.com/kakao/kakao-ios-sdk.git", 
-            .upToNextMajor(from: "2.24.0")
+            branch: "master"
         )
     ]
 )
