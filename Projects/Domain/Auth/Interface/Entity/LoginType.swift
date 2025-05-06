@@ -9,6 +9,6 @@
 import Foundation
 
 public enum LoginType: String {
-    case kakao = "Kakao"
-    case apple = "Apple"
+    case kakao = "KAKAO"
+    case apple = "APPLE"
 }

@@ -9,12 +9,15 @@ import Foundation
 import AuthInterface
 import BaseDomain
 import ComposableArchitecture
+import Network
 
 extension AuthClient: DependencyKey {
     public static let liveValue = AuthClient(
         signIn: { domain, idToken in
             let requestDTO = SignInRequestDTO(idToken: idToken)
             let apiEndpoint = AuthEndpoint.signIn(provider: domain, requestDTO)
+            let response = try await NetworkProviderImpl.shared.request(apiEndpoint)
+            return response.toDomain()
         },
         saveToken: { token in
             return

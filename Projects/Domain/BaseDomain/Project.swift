@@ -8,6 +8,7 @@ let project = Project.module(
         .interface(
             module: .domain(.BaseDomain),
             dependencies: [
+                .core(target: .Network, type: .interface),
                 .shared(target: .GlobalThirdPartyLibrary)
             ]
         ),
@@ -15,7 +16,7 @@ let project = Project.module(
             module: .domain(.BaseDomain),
             dependencies: [
                 .domain(target: .BaseDomain, type: .interface),
-                .core(target: .Network, type: .interface),
+                .core(target: .Network),
                 .shared(target: .Util),
                 .shared(target: .GlobalThirdPartyLibrary)
             ]

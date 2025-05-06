@@ -10,11 +10,11 @@ import Foundation
 import ComposableArchitecture
 
 public struct AuthClient {
-    public var signIn: @Sendable (LoginType, String) async throws -> Void
+    public var signIn: @Sendable (LoginType, String) async throws -> (String, User)
     public var saveToken: (Token) -> Void
 //    public var loadToken: @Sendable () -> Token
    
-    public init(signIn: @escaping @Sendable (LoginType, String) async throws -> Void,
+    public init(signIn: @escaping @Sendable (LoginType, String) async throws -> (String, User),
                 saveToken: @escaping (Token) -> Void/*,*/
                 /*loadToken: @escaping @Sendable () -> Token*/) {
         self.signIn = signIn

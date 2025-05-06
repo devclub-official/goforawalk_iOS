@@ -11,7 +11,15 @@ import NetworkInterface
 
 extension Requestable {
     private func makeURLComponents(isBypass: Bool) throws -> URLComponents? {
-        URLComponents(string: "https://api.goforawalk.site")
+        guard let baseURL = Bundle.main.infoDictionary?["BASE_URL"] as? String else {
+            throw NetworkError.urlRequestError(.makeURLError)
+        }
+        
+        guard let prefix = Bundle.main.infoDictionary?["BASE_URL_PREFIX"] as? String else {
+            throw NetworkError.urlRequestError(.makeURLError)
+        }
+        
+        return URLComponents(string: baseURL + prefix + path)
     }
     
     private func getQueryParameters() throws -> [URLQueryItem]? {

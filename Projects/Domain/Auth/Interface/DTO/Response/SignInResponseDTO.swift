@@ -19,16 +19,20 @@ public struct SignInResponseDTO: Decodable {
     }
     
     let userId: Int
-    let credentails: Credentials
+    let credentials: Credentials
     let userInfo: UserInfo
     
     public init(
         userId: Int,
-        credentails: Credentials,
+        credentials: Credentials,
         userInfo: UserInfo
     ) {
         self.userId = userId
-        self.credentails = credentails
+        self.credentials = credentials
         self.userInfo = userInfo
+    }
+    
+    public func toDomain() -> (String, User) {
+        (credentials.accessToken, User(id: userId, nickname: userInfo.nickname))
     }
 }

@@ -7,6 +7,7 @@ public final class NetworkProviderImpl: NetworkProvider {
     public func request<N: Networkable, T: Decodable>(_ endpoint: N) async throws -> T where N.Response == T {
         do {
             let urlRequest: URLRequest = try endpoint.makeURLRequest(isBypass: false)
+            print(urlRequest.url)
             let (data, response) = try await URLSession.shared.data(for: urlRequest, delegate: nil)
             guard let response = response as? HTTPURLResponse else {
                 throw NetworkError.noResponse
@@ -28,10 +29,13 @@ public final class NetworkProviderImpl: NetworkProvider {
             print(response.statusCode)
             switch response.statusCode {
             case 200...299:
-                guard let decodedResponse = try? JSONDecoder().decode(T.self, from: data) else {
+                do {
+                    let decodedResponse = try JSONDecoder().decode(ResponseData<T>.self, from: data)
+                    return decodedResponse.data
+                } catch {
+                    print(error)
                     throw NetworkError.failedDecoding
                 }
-                return decodedResponse
             case 401 :
                 throw NetworkError.failedAuthorization
             case 400...499:

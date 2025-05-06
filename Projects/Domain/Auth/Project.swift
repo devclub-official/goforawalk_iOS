@@ -15,7 +15,8 @@ let project = Project.module(
             module: .domain(.Auth),
             dependencies: [
                 .domain(target: .Auth, type: .interface),
-                .domain(target: .BaseDomain)
+                .domain(target: .BaseDomain),
+                .SPM.kakaoSDK
             ]
         ),
         .testing(

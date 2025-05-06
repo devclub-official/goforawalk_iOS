@@ -26,7 +26,12 @@ let targets: [Target] = [
         sources: ["Sources/**"],
         resources: ["Resources/**"],
         scripts: scripts,
-        dependencies: [],
+        dependencies: [
+            .feature(target: .Root),
+            .feature(target: .BaseFeature),
+            .domain(target: .Auth),
+            .domain(target: .BaseDomain)
+        ],
         settings: .settings(base: env.baseSetting)
     )
 ]
