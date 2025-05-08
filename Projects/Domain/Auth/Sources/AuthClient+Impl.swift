@@ -20,11 +20,11 @@ extension AuthClient: DependencyKey {
             return response.toDomain()
         },
         saveToken: { token in
-            return
+            LocalAuthStoreImpl().saveToken(token: token)
         },
-//        loadToken: {
-//            return
-//        }
+        loadToken: {
+            LocalAuthStoreImpl().loadToken()
+        }
     )
 }
 

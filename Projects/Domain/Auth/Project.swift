@@ -16,6 +16,7 @@ let project = Project.module(
             dependencies: [
                 .domain(target: .Auth, type: .interface),
                 .domain(target: .BaseDomain),
+                .core(target: .KeyChainStore),
                 .SPM.kakaoSDK
             ]
         ),
