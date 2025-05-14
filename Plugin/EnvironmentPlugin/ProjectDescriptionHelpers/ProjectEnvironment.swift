@@ -14,5 +14,7 @@ public let env = ProjectEnvironment(
     organizationName: "com.gaeng2y",
     destinations: .iOS,
     deploymentTargets: .multiplatform(iOS: "18.0"),
-    baseSetting: [:]
+    baseSetting: [
+        "DEVELOPMENT_TEAM": "8UV3Y69NB7"
+    ]
 )

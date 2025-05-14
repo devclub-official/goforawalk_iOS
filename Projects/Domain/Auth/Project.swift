@@ -8,16 +8,15 @@ let project = Project.module(
         .interface(
             module: .domain(.Auth),
             dependencies: [
-                .domain(target: .BaseDomain, type: .interface),
+                .shared(target: .GlobalThirdPartyLibrary)
             ]
         ),
         .implements(
             module: .domain(.Auth),
             dependencies: [
                 .domain(target: .Auth, type: .interface),
-                .domain(target: .BaseDomain),
                 .core(target: .KeyChainStore),
-                .SPM.kakaoSDK
+                .shared(target: .GlobalThirdPartyLibrary)
             ]
         ),
         .testing(

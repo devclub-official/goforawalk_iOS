@@ -10,7 +10,9 @@ let project = Project.module(
             product: .framework,
             dependencies: [
                 .SPM.tca,
-                .SPM.kakaoSDK
+                .SPM.kakaoCommon,
+                .SPM.kakaoAuth,
+                .SPM.kakaoUser
             ]
         )
     ]

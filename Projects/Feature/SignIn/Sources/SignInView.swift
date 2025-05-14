@@ -6,16 +6,13 @@
 //  Copyright © 2025 com.gaeng2y. All rights reserved.
 //
 
-import SwiftUI
-import BaseFeature
-import AuthInterface
-import GlobalThirdPartyLibrary
 import ComposableArchitecture
+import SwiftUI
 
 public struct SignInView: View {
-    private let store: StoreOf<SignInStore>
+    private let store: StoreOf<SignInFeature>
     
-    public init(store: StoreOf<SignInStore>) {
+    public init(store: StoreOf<SignInFeature>) {
         self.store = store
     }
     
@@ -29,19 +26,11 @@ public struct SignInView: View {
             Spacer()
             
             Button {
-                store.send(.tapSignInButton(.kakao))
+                store.send(.kakaoSignInButtonTapped)
             } label: {
                 Text("카카오 로그인")
             }
         }
         .padding(.vertical, 20)
     }
-}
-
-#Preview {
-    SignInView(
-        store: .init(initialState: SignInStore.State(isSignedIn: false)) {
-            SignInStore()
-        }
-    )
 }

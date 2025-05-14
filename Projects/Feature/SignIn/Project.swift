@@ -12,8 +12,8 @@ let project = Project.module(
         .implements(
             module: .feature(.SignIn),
             dependencies: [
-                .feature(target: .BaseFeature),
                 .feature(target: .SignIn, type: .interface),
+                .domain(target: .Auth, type: .interface),
                 .domain(target: .Auth)
             ]
         ),

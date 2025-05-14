@@ -5,10 +5,9 @@
 //  Created by Kyeongmo Yang on 4/28/25.
 //
 
-import Foundation
 import AuthInterface
-import BaseDomain
 import ComposableArchitecture
+import Foundation
 import Network
 
 extension AuthClient: DependencyKey {
@@ -25,6 +24,20 @@ extension AuthClient: DependencyKey {
         loadToken: {
             LocalAuthStoreImpl().loadToken()
         }
+    )
+}
+
+extension AuthClient: TestDependencyKey {
+    public static var previewValue = Self(
+        signIn: unimplemented("\(Self.self).signIn"),
+        saveToken: unimplemented("\(Self.self).saveToken"),
+        loadToken: unimplemented("\(Self.self).loadToken")
+    )
+    
+    public static let testValue = Self(
+        signIn: unimplemented("\(Self.self).signIn"),
+        saveToken: unimplemented("\(Self.self).saveToken"),
+        loadToken: unimplemented("\(Self.self).loadToken")
     )
 }
 

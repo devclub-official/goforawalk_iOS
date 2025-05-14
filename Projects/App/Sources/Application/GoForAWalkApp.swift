@@ -6,27 +6,28 @@
 //  Copyright © 2025 com.gaeng2y. All rights reserved.
 //
 
-import SwiftUI
-import Root
-import KakaoSDKCommon
 import KakaoSDKAuth
+import KakaoSDKCommon
+import KakaoSDKUser
+import Root
+import SwiftUI
 
 @main
 struct GoForAWalkApp: App {
+    init() {
+        KakaoSDK.initSDK(appKey: "967669c3b7e25ab9fa8fda2775b8f581")
+        print("\(#function) in Kakao SDK instance address: \(Unmanaged.passUnretained(KakaoSDK.shared).toOpaque())")
+    }
+    
     var body: some Scene {
         WindowGroup {
-            RootView(store: .init(initialState: RootStore.State()) {
-                RootStore()
-            })
-            .onOpenURL { url in
+            RootView(store: .init(initialState: RootFeature.State()) {
+                RootFeature()
+            }).onOpenURL { url in
                 if (AuthApi.isKakaoTalkLoginUrl(url)) {
                     _ = AuthController.handleOpenUrl(url: url)
                 }
             }
         }
-    }
-    
-    init() {
-        KakaoSDK.initSDK(appKey: "967669c3b7e25ab9fa8fda2775b8f581")
     }
 }

@@ -6,22 +6,28 @@
 //  Copyright © 2025 com.gaeng2y. All rights reserved.
 //
 
-import SwiftUI
 import ComposableArchitecture
 import SignIn
+import SwiftUI
 
 public struct RootView: View {
-    public let store: StoreOf<RootStore>
+    public let store: StoreOf<RootFeature>
     
-    public init(store: StoreOf<RootStore>) {
+    public init(store: StoreOf<RootFeature>) {
         self.store = store
     }
     
     public var body: some View {
-        SignInView(store: store.scope(state: \.signIn, action: \.signIn))
+        SignInView(
+            store: store.scope(state: \.signIn, action: \.signIn)
+        )
     }
 }
 
-//#Preview {
-//    RootView(store: RootStore())
-//}
+#Preview {
+    RootView(
+        store: Store(initialState: RootFeature.State()) {
+            RootFeature()
+        }
+    )
+}

@@ -5,8 +5,10 @@ public extension TargetDependency {
 }
 
 public extension TargetDependency.SPM {
-    static let kakaoSDK = TargetDependency.external(name: "KakaoSDK")
     static let tca = TargetDependency.external(name: "ComposableArchitecture")
+    static let kakaoCommon = TargetDependency.external(name:"KakaoSDKCommon")
+    static let kakaoAuth = TargetDependency.external(name:"KakaoSDKAuth")
+    static let kakaoUser = TargetDependency.external(name:"KakaoSDKUser")
 }
 
 public extension Package {

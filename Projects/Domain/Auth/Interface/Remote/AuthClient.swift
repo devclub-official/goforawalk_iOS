@@ -7,32 +7,19 @@
 //
 
 import Foundation
-import ComposableArchitecture
 
 public struct AuthClient {
     public var signIn: @Sendable (LoginType, String) async throws -> (Token, UserInfo)
     public var saveToken: (Token) -> Void
     public var loadToken: @Sendable () -> Token
     
-    public init(signIn: @escaping @Sendable (LoginType, String) async throws -> (Token, UserInfo),
-                saveToken: @escaping (Token) -> Void,
-                loadToken: @escaping @Sendable () -> Token) {
+    public init(
+        signIn: @escaping @Sendable (LoginType, String) async throws -> (Token, UserInfo),
+        saveToken: @escaping (Token) -> Void,
+        loadToken: @escaping @Sendable () -> Token
+    ) {
         self.signIn = signIn
         self.saveToken = saveToken
         self.loadToken = loadToken
     }
-}
-
-extension AuthClient: TestDependencyKey {
-    public static var previewValue = Self(
-        signIn: unimplemented("\(Self.self).signIn"),
-        saveToken: unimplemented("\(Self.self).saveToken"),
-        loadToken: unimplemented("\(Self.self).loadToken")
-    )
-    
-    public static let testValue = Self(
-        signIn: unimplemented("\(Self.self).signIn"),
-        saveToken: unimplemented("\(Self.self).saveToken"),
-        loadToken: unimplemented("\(Self.self).loadToken")
-    )
 }

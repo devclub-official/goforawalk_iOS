@@ -8,8 +8,7 @@ let project = Project.module(
         .implements(
             module: .feature(.Root),
             dependencies: [
-                .feature(target: .BaseFeature),
-                .feature(target: .SignIn)
+                .feature(target: .SignIn, type: .sources)
             ]
         ),
     ]

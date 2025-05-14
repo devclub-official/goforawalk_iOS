@@ -1,29 +1,29 @@
 //
-//  RootStore.swift
+//  RootFeature.swift
 //  Root
 //
 //  Created by Kyeongmo Yang on 5/5/25.
 //  Copyright © 2025 com.gaeng2y. All rights reserved.
 //
 
-import BaseFeature
-import SignIn
+import Auth
 import ComposableArchitecture
+import KeyChainStore
+import SignIn
 
 @Reducer
-public struct RootStore {
+public struct RootFeature {
     @ObservableState
     public struct State {
         public var path: [String] = []
-        
-        public var signIn: SignInStore.State = .init(isSignedIn: false)
+        public var signIn: SignInFeature.State = .init()
         
         public init() {
         }
     }
     
     public enum Action {
-        case signIn(SignInStore.Action)
+        case signIn(SignInFeature.Action)
     }
     
     public init() {}
@@ -31,13 +31,17 @@ public struct RootStore {
     public var body: some ReducerOf<Self> {
         Reduce { state, action in
             switch action {
-            case .signIn:
+            case .signIn(.isAlreadyAuthorized):
+                return .none
+                
+            default:
                 return .none
             }
         }
         
         Scope(state: \.signIn, action: \.signIn) {
-            SignInStore()
+            SignInFeature()
         }
+        .dependency(\.authClient, .liveValue)
     }
 }

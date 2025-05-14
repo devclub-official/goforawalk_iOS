@@ -25,15 +25,14 @@ extension ModulePaths: MicroTargetPathConvertable {
 public extension ModulePaths {
     enum Feature: String, MicroTargetPathConvertable {
         case Root
+        case SignIn
         case Onboarding
-        case BaseFeature
     }
 }
 
 public extension ModulePaths {
     enum Domain: String, MicroTargetPathConvertable {
         case Auth
-        case BaseDomain
     }
 }
 
@@ -41,7 +40,6 @@ public extension ModulePaths {
     enum Core: String, MicroTargetPathConvertable {
         case Network
         case KeyChainStore
-        case CoreKit
     }
 }
 
