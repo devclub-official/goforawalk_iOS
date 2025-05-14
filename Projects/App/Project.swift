@@ -27,7 +27,7 @@ let targets: [Target] = [
         resources: ["Resources/**"],
         scripts: scripts,
         dependencies: [
-            .feature(target: .Root),
+            .feature(target: .SignIn),
             .domain(target: .Auth),
             .core(target: .KeyChainStore),
             .core(target: .Network)
