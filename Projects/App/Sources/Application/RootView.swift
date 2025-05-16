@@ -23,6 +23,9 @@ public struct RootView: View {
             MainTabView(store: store.scope(state: \.mainTab, action: \.mainTab))
         } else {
             SignInView(store: store.scope(state: \.signIn, action: \.signIn))
+                .onAppear {
+                    store.send(.signIn(.checkAuthorization))
+                }
         }
     }
 }

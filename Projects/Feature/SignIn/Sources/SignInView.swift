@@ -10,10 +10,10 @@ import ComposableArchitecture
 import SwiftUI
 
 public struct SignInView: View {
-    private let store: StoreOf<SignInFeature>
+    @StateObject private var store: StoreOf<SignInFeature>
     
     public init(store: StoreOf<SignInFeature>) {
-        self.store = store
+        _store = .init(wrappedValue: store)
     }
     
     public var body: some View {
@@ -32,5 +32,6 @@ public struct SignInView: View {
             }
         }
         .padding(.vertical, 20)
+        .alert($store.scope(state: \.alert, action: \.alert))
     }
 }

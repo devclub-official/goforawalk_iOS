@@ -20,7 +20,7 @@ public final class NetworkProviderImpl: NetworkProvider {
             }
             
             if let responseJsonString = String(data: data, encoding: .utf8) {
-                print(responseJsonString)
+                print("responseJsonString: \(responseJsonString)")
             }
             
             if let emptyResponse = try JSONDecoder().decode(EmptyData.self, from: data) as? T, data.isEmpty {

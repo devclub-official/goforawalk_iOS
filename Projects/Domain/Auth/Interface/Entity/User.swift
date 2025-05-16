@@ -8,7 +8,7 @@
 
 import Foundation
 
-public struct UserInfo {
+public struct User {
     public let nickname: String
     public let email: String
     
@@ -18,8 +18,8 @@ public struct UserInfo {
     }
 }
 
-public extension UserInfo {
-    static let mock: UserInfo = .init(
+public extension User {
+    static let mock: User = .init(
         nickname: "양경모",
         email: "gaeng2y@gmail.com"
     )

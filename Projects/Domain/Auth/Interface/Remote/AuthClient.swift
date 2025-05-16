@@ -9,12 +9,12 @@
 import Foundation
 
 public struct AuthClient {
-    public var signIn: @Sendable (LoginType, String) async throws -> (Token, UserInfo)
+    public var signIn: @Sendable (LoginType, String) async throws -> (Token, User)
     public var saveToken: (Token) -> Void
     public var loadToken: @Sendable () -> Token
     
     public init(
-        signIn: @escaping @Sendable (LoginType, String) async throws -> (Token, UserInfo),
+        signIn: @escaping @Sendable (LoginType, String) async throws -> (Token, User),
         saveToken: @escaping (Token) -> Void,
         loadToken: @escaping @Sendable () -> Token
     ) {

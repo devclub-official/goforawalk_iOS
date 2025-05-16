@@ -19,17 +19,24 @@ public struct SignInFeature {
     @ObservableState
     public struct State {
         public var isLoading: Bool = false
+        @Presents var alert: AlertState<Action.Alert>?
         
         public init() {}
     }
     
     public enum Action {
+        case alert(PresentationAction<Alert>)
         case checkAuthorization
         case isAlreadyAuthorized
         case kakaoSignInButtonTapped
-        case signInWithKakakoResponse(AuthInterface.Token, UserInfo)
+        case signInWithKakakoResponse(AuthInterface.Token, AuthInterface.User)
         case signInWithKakaoError(Error)
         // TODO: - Apple login
+        
+        @CasePathable
+        public enum Alert {
+            case messageReceived(String)
+        }
     }
     
     @Dependency(\.authClient) var authClient
@@ -59,24 +66,31 @@ public struct SignInFeature {
                                 continuation.resume(returning: oauthToken)
                             }
                         }
-                        guard let idToken = oauthToken?.idToken else {
-                            return
-                        }
-                        let (token, userInfo) = try await authClient.signIn(.kakao, idToken)
+                        let (token, userInfo) = try await authClient.signIn(.kakao, oauthToken?.accessToken ?? "")
                         await send(.signInWithKakakoResponse(token, userInfo))
                     } catch {
                         await send(.signInWithKakaoError(error))
                     }
                 }
                 
-            case let .signInWithKakakoResponse(token, userInfo):
+            case let .signInWithKakakoResponse(token, _):
                 state.isLoading = false
                 authClient.saveToken(token)
                 return .send(.isAlreadyAuthorized)
                 
             case let .signInWithKakaoError(error):
                 state.isLoading = false
-                return .send(.isAlreadyAuthorized)
+                state.alert = AlertState(
+                    title: {
+                        TextState("알림")
+                    }, actions: {
+                        ButtonState {
+                            TextState("확인")
+                        }
+                    }, message: {
+                        TextState(error.localizedDescription)
+                    })
+                return .none
                 
             default:
                 return .none

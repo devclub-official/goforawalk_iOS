@@ -8,6 +8,7 @@
 
 import ComposableArchitecture
 import SwiftUI
+import FeedFeature
 
 public struct MainTabView: View {
     private let store: StoreOf<MainTabFeature>
@@ -20,11 +21,7 @@ public struct MainTabView: View {
         TabView {
             Tab(MainTab.home.title, systemImage: MainTab.home.imageName) {
                 NavigationStack {
-                    ScrollView {
-                        List([1, 2, 3, 4, 5, 6, 7, 8, 9, 10], id: \.self) { number in
-                            Text("\(number)")
-                        }
-                    }
+                    FeedListView()
                 }
                 .navigationTitle(MainTab.home.title)
             }
