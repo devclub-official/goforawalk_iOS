@@ -28,6 +28,7 @@ let targets: [Target] = [
         scripts: scripts,
         dependencies: [
             .feature(target: .SignIn),
+            .feature(target: .MainFeature),
             .domain(target: .Auth),
             .core(target: .KeyChainStore),
             .core(target: .Network)

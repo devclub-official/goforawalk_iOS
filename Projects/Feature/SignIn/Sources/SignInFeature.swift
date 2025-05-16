@@ -59,10 +59,10 @@ public struct SignInFeature {
                                 continuation.resume(returning: oauthToken)
                             }
                         }
-                        guard let oauthToken else {
+                        guard let idToken = oauthToken?.idToken else {
                             return
                         }
-                        let (token, userInfo) = try await authClient.signIn(.kakao, oauthToken.accessToken)
+                        let (token, userInfo) = try await authClient.signIn(.kakao, idToken)
                         await send(.signInWithKakakoResponse(token, userInfo))
                     } catch {
                         await send(.signInWithKakaoError(error))

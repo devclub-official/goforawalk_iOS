@@ -9,7 +9,6 @@
 import KakaoSDKAuth
 import KakaoSDKCommon
 import KakaoSDKUser
-import Root
 import SwiftUI
 
 @main
@@ -24,7 +23,7 @@ struct GoForAWalkApp: App {
             RootView(store: .init(initialState: RootFeature.State()) {
                 RootFeature()
             }).onOpenURL { url in
-                if (AuthApi.isKakaoTalkLoginUrl(url)) {
+                if AuthApi.isKakaoTalkLoginUrl(url) {
                     _ = AuthController.handleOpenUrl(url: url)
                 }
             }

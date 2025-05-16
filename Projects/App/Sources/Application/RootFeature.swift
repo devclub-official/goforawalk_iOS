@@ -10,20 +10,23 @@ import Auth
 import ComposableArchitecture
 import KeyChainStore
 import SignIn
+import MainFeature
 
 @Reducer
 public struct RootFeature {
     @ObservableState
     public struct State {
-        public var path: [String] = []
-        public var signIn: SignInFeature.State = .init()
+        var isSignIn: Bool = false
         
-        public init() {
-        }
+        var signIn: SignInFeature.State = .init()
+        var mainTab: MainTabFeature.State = .init()
+        
+        public init() {}
     }
     
     public enum Action {
         case signIn(SignInFeature.Action)
+        case mainTab(MainTabFeature.Action)
     }
     
     public init() {}
@@ -32,6 +35,7 @@ public struct RootFeature {
         Reduce { state, action in
             switch action {
             case .signIn(.isAlreadyAuthorized):
+                state.isSignIn = true
                 return .none
                 
             default:
