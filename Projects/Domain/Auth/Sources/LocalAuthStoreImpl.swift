@@ -11,6 +11,8 @@ import AuthInterface
 import KeyChainStore
 
 public final class LocalAuthStoreImpl: LocalAuthStore {
+    public init() {}
+    
     public func loadToken() -> Token {
         Token(
             accessToken: KeyChainStore.shared.load(property: .accessToken),

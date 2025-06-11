@@ -6,24 +6,34 @@
 //  Copyright © 2025 com.gaeng2y. All rights reserved.
 //
 
+import ComposableArchitecture
 import SwiftUI
 
 public struct FeedListView: View {
-    public init() {}
+    private var store: StoreOf<FeedFeature>
+    
+    public init(store: StoreOf<FeedFeature>) {
+        self.store = store
+    }
     
     public var body: some View {
         ScrollView {
             LazyVStack {
-                ForEach(1...20, id: \.self) { number in
-                    FeedCell()
+                ForEach(store.footsteps) { footsteps in
+                    FeedCell(footstep: footsteps)
                         .padding(.vertical, 5)
                         .padding(.horizontal, 10)
                 }
             }
         }
+        .onAppear {
+            store.send(.onAppear)
+        }
     }
 }
 
 #Preview {
-    FeedListView()
+    FeedListView(store: .init(initialState: FeedFeature.State()) {
+        FeedFeature()
+    })
 }

@@ -43,6 +43,9 @@ public struct RootFeature {
             }
         }
         
+        Scope(state: \.mainTab, action: \.mainTab) {
+            MainTabFeature()
+        }
         Scope(state: \.signIn, action: \.signIn) {
             SignInFeature()
         }

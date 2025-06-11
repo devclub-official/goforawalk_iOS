@@ -21,7 +21,7 @@ public struct MainTabView: View {
         TabView {
             Tab(MainTab.home.title, systemImage: MainTab.home.imageName) {
                 NavigationStack {
-                    FeedListView()
+                    FeedListView(store: store.scope(state: \.feed, action: \.feed))
                 }
                 .navigationTitle(MainTab.home.title)
             }

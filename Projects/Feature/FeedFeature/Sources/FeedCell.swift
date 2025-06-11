@@ -7,12 +7,19 @@
 //
 
 import SwiftUI
+import FeedServiceInterface
 
 struct FeedCell: View {
+    private let footstep: Footstep
+    
+    public init(footstep: Footstep) {
+        self.footstep = footstep
+    }
+    
     var body: some View {
         VStack {
             HStack {
-                Text("닉네임")
+                Text(footstep.userNickname)
                     .font(.headline)
                 
                 Spacer()
@@ -27,7 +34,7 @@ struct FeedCell: View {
             .padding(.top, 15)
             
             ZStack {
-                AsyncImage(url: URL(string: "https://yavuzceliker.github.io/sample-images/image-1.jpg")!) { phase in
+                AsyncImage(url: footstep.imageUrl) { phase in
                     switch phase {
                     case .empty:
                         Color.gray.opacity(0.1)
@@ -37,28 +44,6 @@ struct FeedCell: View {
                             .resizable()
                             .scaledToFill()
                             .frame(height: 250)
-                            .overlay(alignment: .topLeading) {
-                                VStack {
-                                    HStack {
-                                        Text("걷는")
-                                        
-                                        Spacer()
-                                        
-                                        Text("3일 연속")
-                                    }
-                                    .foregroundStyle(Color.ff6b6b)
-                                    
-                                    Spacer()
-                                    
-                                    HStack {
-                                        Spacer()
-                                        
-                                        Text("2025년 6월 28일")
-                                            .foregroundStyle(Color.gray757990)
-                                    }
-                                }
-                                .padding(15)
-                            }
                             .clipped()
                     case .failure:
                         Image(systemName: "photo")
@@ -70,10 +55,15 @@ struct FeedCell: View {
             }
             
             HStack(alignment: .top) {
-                Text("이 편지는 영국에서 최초로 시작되어 일년에 한바퀴를 돌면서 받는 사람에게 행운을(50글자)")
+                Text(footstep.content ?? "")
                 
-                Text("30분 전")
+                if Calendar.current.isDate(footstep.createdAt, inSameDayAs: .now) {
+                    Text(footstep.createdAt.formatted(date: .omitted, time: .shortened))
+                } else {
+                    Text(footstep.createdAt.formatted(date: .numeric, time: .omitted))
+                }
             }
+            .foregroundStyle(Color.gray757990)
             .padding(10)
         }
         .clipShape(RoundedRectangle(cornerRadius: 6))
@@ -85,7 +75,7 @@ struct FeedCell: View {
 }
 
 #Preview {
-    FeedCell()
+    FeedCell(footstep: .mock)
 }
 
 fileprivate extension Color {
