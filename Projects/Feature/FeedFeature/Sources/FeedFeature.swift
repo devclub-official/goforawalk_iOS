@@ -23,6 +23,7 @@ public struct FeedFeature {
     public enum Action {
         case onAppear
         case fetchFootstepsResponse([Footstep])
+        case footstepCellMenuTapped(Int)
     }
     
     @Dependency(\.feedClient) var feedClient
@@ -40,6 +41,12 @@ public struct FeedFeature {
             case .fetchFootstepsResponse(let footsteps):
                 state.footsteps = footsteps
                 return .none
+                
+            case .footstepCellMenuTapped(let id):
+                return .run { send in
+                    try await feedClient.deleteFootstep(id)
+                    await send(.onAppear)
+                }
             }
         }
     }

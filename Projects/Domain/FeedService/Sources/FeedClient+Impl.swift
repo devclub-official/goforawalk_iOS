@@ -17,6 +17,10 @@ extension FeedClient: DependencyKey {
             let apiEndpoint = FeedEndpoint.fetchFootsteps()
             let response = try await NetworkProviderImpl.shared.request(apiEndpoint)
             return response.footsteps.map { $0.toDomain() }
+        },
+        deleteFootstep: { id in
+            let endpoint = FeedEndpoint.deleteFoorstep(with: id)
+            _ = try await NetworkProviderImpl.shared.request(endpoint)
         }
     )
 }
@@ -25,11 +29,13 @@ extension FeedClient: TestDependencyKey {
     public static var previewValue = Self(
         fetchFootsteps: {
             return [.mock, .mock, .mock, .mock, .mock]
-        }
+        },
+        deleteFootstep: unimplemented("\(Self.self).deleteFootstep")
     )
     
     public static let testValue = Self(
-        fetchFootsteps: unimplemented("\(Self.self).fetchFootsteps")
+        fetchFootsteps: unimplemented("\(Self.self).fetchFootsteps"),
+        deleteFootstep: unimplemented("\(Self.self).deleteFootstep")
     )
 }
 

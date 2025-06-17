@@ -11,9 +11,11 @@ import FeedServiceInterface
 
 struct FeedCell: View {
     private let footstep: Footstep
+    private let onMenuTapped: (Footstep) -> Void
     
-    public init(footstep: Footstep) {
+    public init(footstep: Footstep, onMenuTapped: @escaping (Footstep) -> Void) {
         self.footstep = footstep
+        self.onMenuTapped = onMenuTapped
     }
     
     var body: some View {
@@ -24,7 +26,10 @@ struct FeedCell: View {
                 
                 Spacer()
                 
-                Button {
+                Menu {
+                    Button("삭제하기", role: .destructive) {
+                        onMenuTapped(footstep)
+                    }
                 } label: {
                     Image(systemName: "ellipsis")
                         .foregroundStyle(Color.gray)
@@ -75,7 +80,7 @@ struct FeedCell: View {
 }
 
 #Preview {
-    FeedCell(footstep: .mock)
+    FeedCell(footstep: .mock) { _ in }
 }
 
 fileprivate extension Color {

@@ -12,9 +12,17 @@ import NetworkInterface
 
 public struct FeedEndpoint {
     public static func fetchFootsteps() -> EndPoint<FetchFootstepsResponseDTO> {
-        return EndPoint(
+        EndPoint(
             path: "footsteps",
             httpMethod: .get,
+            headers: ["Authorization": "Bearer \(LocalAuthStoreImpl().loadToken().accessToken)"]
+        )
+    }
+    
+    public static func deleteFoorstep(with id: Int) -> EndPoint<EmptyData> {
+        EndPoint(
+            path: "footsteps/\(id)",
+            httpMethod: .delete,
             headers: ["Authorization": "Bearer \(LocalAuthStoreImpl().loadToken().accessToken)"]
         )
     }

@@ -20,9 +20,11 @@ public struct FeedListView: View {
         ScrollView {
             LazyVStack {
                 ForEach(store.footsteps) { footsteps in
-                    FeedCell(footstep: footsteps)
-                        .padding(.vertical, 5)
-                        .padding(.horizontal, 10)
+                    FeedCell(footstep: footsteps) { footstep in
+                        store.send(.footstepCellMenuTapped(footstep.id))
+                    }
+                    .padding(.vertical, 5)
+                    .padding(.horizontal, 10)
                 }
             }
         }

@@ -10,10 +10,13 @@ import Foundation
 
 public struct FeedClient {
     public var fetchFootsteps: @Sendable () async throws -> [Footstep]
+    public var deleteFootstep: @Sendable (Int) async throws -> Void
     
     public init(
-        fetchFootsteps: @escaping @Sendable () async throws -> [Footstep]
+        fetchFootsteps: @escaping @Sendable () async throws -> [Footstep],
+        deleteFootstep: @escaping @Sendable (Int) async throws -> Void
     ) {
         self.fetchFootsteps = fetchFootsteps
+        self.deleteFootstep = deleteFootstep
     }
 }
