@@ -59,17 +59,9 @@ struct FeedCell: View {
                 }
             }
             
-            HStack(alignment: .top) {
-                Text(footstep.content ?? "")
-                
-                if Calendar.current.isDate(footstep.createdAt, inSameDayAs: .now) {
-                    Text(footstep.createdAt.formatted(date: .omitted, time: .shortened))
-                } else {
-                    Text(footstep.createdAt.formatted(date: .numeric, time: .omitted))
-                }
-            }
-            .foregroundStyle(Color.gray757990)
-            .padding(10)
+            Text(footstep.content ?? "")
+                .foregroundStyle(Color.gray757990)
+                .padding(10)
         }
         .clipShape(RoundedRectangle(cornerRadius: 6))
         .overlay(

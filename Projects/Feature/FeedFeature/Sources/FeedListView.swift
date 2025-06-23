@@ -17,19 +17,24 @@ public struct FeedListView: View {
     }
     
     public var body: some View {
-        ScrollView {
-            LazyVStack {
-                ForEach(store.footsteps) { footsteps in
-                    FeedCell(footstep: footsteps) { footstep in
-                        store.send(.footstepCellMenuTapped(footstep.id))
+        if store.footsteps.isEmpty {
+            Text("아직 발자취가 없어요.\n첫 발자취를 남겨볼까요?")
+                .multilineTextAlignment(.center)
+        } else {
+            ScrollView {
+                LazyVStack {
+                    ForEach(store.footsteps) { footsteps in
+                        FeedCell(footstep: footsteps) { footstep in
+                            store.send(.footstepCellMenuTapped(footstep.id))
+                        }
+                        .padding(.vertical, 5)
+                        .padding(.horizontal, 10)
                     }
-                    .padding(.vertical, 5)
-                    .padding(.horizontal, 10)
                 }
             }
-        }
-        .onAppear {
-            store.send(.onAppear)
+            .onAppear {
+                store.send(.onAppear)
+            }
         }
     }
 }
