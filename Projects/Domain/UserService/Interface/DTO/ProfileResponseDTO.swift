@@ -16,7 +16,7 @@ public struct ProfileResponseDTO: Decodable {
     let totalFootstepCount: Int
     let footstepStreakDays: Int
     
-    func toDomain() -> Profile {
+    public func toDomain() -> Profile {
         .init(
             id: userId,
             nickname: userNickname,

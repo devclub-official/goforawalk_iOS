@@ -10,8 +10,22 @@ import Foundation
 
 public struct Profile {
     let id: Int
-    let nickname: String
+    public let nickname: String
     let email: String
-    let totalFootstepCount: Int
-    let footstepStreakDays: Int
+    public let totalFootstepCount: Int
+    public let footstepStreakDays: Int
+    
+    public init(
+        id: Int = 0,
+        nickname: String = "",
+        email: String = "",
+        totalFootstepCount: Int = 0,
+        footstepStreakDays: Int = 0
+    ) {
+        self.id = id
+        self.nickname = nickname
+        self.email = email
+        self.totalFootstepCount = totalFootstepCount
+        self.footstepStreakDays = footstepStreakDays
+    }
 }
