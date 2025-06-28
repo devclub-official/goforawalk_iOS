@@ -10,8 +10,13 @@ import Foundation
 
 public struct ProfileClient {
     public var fetchProfile: @Sendable () async throws -> Profile
+    public var withdrawUser: @Sendable () async throws -> Void
     
-    public init(fetchProfile: @escaping @Sendable () async throws -> Profile) {
+    public init(
+        fetchProfile: @escaping @Sendable () async throws -> Profile,
+        withdrawUser: @escaping @Sendable () async throws -> Void
+    ) {
         self.fetchProfile = fetchProfile
+        self.withdrawUser = withdrawUser
     }
 }

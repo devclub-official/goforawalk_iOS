@@ -17,17 +17,24 @@ extension ProfileClient: DependencyKey {
             let endpoint = ProfileEndpoint.fetchUserProfile()
             let response = try await NetworkProviderImpl.shared.request(endpoint)
             return response.toDomain()
+        },
+        withdrawUser: {
+            let endpoint = ProfileEndpoint.withdrawUser()
+            let response = try await NetworkProviderImpl.shared.request(endpoint)
+            print(response)
         }
     )
 }
 
 extension ProfileClient: TestDependencyKey {
     public static var previewValue: ProfileClient = .init(
-        fetchProfile: unimplemented("\(Self.self).fetchProfile")
+        fetchProfile: unimplemented("\(Self.self).fetchProfile"),
+        withdrawUser: unimplemented("\(Self.self).withdrawUser")
     )
     
     public static let testValue: ProfileClient = .init(
-        fetchProfile: unimplemented("\(Self.self).fetchProfile")
+        fetchProfile: unimplemented("\(Self.self).fetchProfile"),
+        withdrawUser: unimplemented("\(Self.self).withdrawUser")
     )
 }
 

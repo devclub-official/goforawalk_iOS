@@ -18,4 +18,12 @@ public struct ProfileEndpoint {
             headers: ["Authorization": "Bearer \(LocalAuthStoreImpl().loadToken().accessToken)"]
         )
     }
+    
+    public static func withdrawUser() -> EndPoint<EmptyData> {
+        EndPoint(
+            path: "users/me",
+            httpMethod: .delete,
+            headers: ["Authorization": "Bearer \(LocalAuthStoreImpl().loadToken().accessToken)"]
+        )
+    }
 }
