@@ -58,15 +58,26 @@ public struct SignInFeature {
                 return .run { send in
                     do {
                         let oauthToken: OAuthToken? = try await withCheckedThrowingContinuation { continuation in
-                            UserApi.shared.loginWithKakaoTalk { oauthToken, error in
-                                if let error {
-                                    continuation.resume(throwing: error)
-                                    return
+                            if UserApi.isKakaoTalkLoginAvailable() {
+                                UserApi.shared.loginWithKakaoTalk { oauthToken, error in
+                                    if let error {
+                                        continuation.resume(throwing: error)
+                                        return
+                                    }
+                                    continuation.resume(returning: oauthToken)
                                 }
-                                continuation.resume(returning: oauthToken)
+                            } else {
+                                UserApi.shared.loginWithKakaoAccount { oauthToken, error in
+                                    if let error {
+                                        continuation.resume(throwing: error)
+                                        return
+                                    }
+                                    continuation.resume(returning: oauthToken)
+                                }
                             }
+                            
                         }
-                        let (token, userInfo) = try await authClient.signIn(.kakao, oauthToken?.accessToken ?? "")
+                        let (token, userInfo) = try await authClient.signIn(.kakao, oauthToken?.idToken ?? "")
                         await send(.signInWithKakakoResponse(token, userInfo))
                     } catch {
                         await send(.signInWithKakaoError(error))

@@ -11,7 +11,7 @@ import Foundation
 public struct ProfileResponseDTO: Decodable {
     let userId: Int
     let userNickname: String
-    let userEmail: String
+    let userEmail: String?
     let userProvider: String
     let totalFootstepCount: Int
     let footstepStreakDays: Int

@@ -15,7 +15,6 @@ import SwiftUI
 struct GoForAWalkApp: App {
     init() {
         KakaoSDK.initSDK(appKey: "967669c3b7e25ab9fa8fda2775b8f581")
-        print("\(#function) in Kakao SDK instance address: \(Unmanaged.passUnretained(KakaoSDK.shared).toOpaque())")
     }
     
     var body: some Scene {

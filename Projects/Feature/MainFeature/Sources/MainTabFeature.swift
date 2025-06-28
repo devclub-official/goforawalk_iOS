@@ -8,6 +8,7 @@
 
 import ComposableArchitecture
 import FeedFeature
+import ProfileFeature
 
 @Reducer
 public struct MainTabFeature {
@@ -16,6 +17,7 @@ public struct MainTabFeature {
         var currentTab: MainTab = .home
         
         var feed: FeedFeature.State = .init()
+        var profile: ProfileFeature.State = .init()
         
         public init() {}
     }
@@ -24,6 +26,7 @@ public struct MainTabFeature {
         case selectTab(MainTab)
         
         case feed(FeedFeature.Action)
+        case profile(ProfileFeature.Action)
     }
     
     public init() {}
@@ -31,6 +34,9 @@ public struct MainTabFeature {
     public var body: some ReducerOf<Self> {
         Scope(state: \.feed, action: \.feed) {
             FeedFeature()
+        }
+        Scope(state: \.profile, action: \.profile) {
+            ProfileFeature()
         }
         
         Reduce { state, action in
@@ -40,6 +46,9 @@ public struct MainTabFeature {
                 return .none
                 
             case .feed(let feedAction):
+                return .none
+                
+            case .profile(let profileAction):
                 return .none
             }
         }

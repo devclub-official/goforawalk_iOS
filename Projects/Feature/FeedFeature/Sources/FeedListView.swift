@@ -17,11 +17,11 @@ public struct FeedListView: View {
     }
     
     public var body: some View {
-        if store.footsteps.isEmpty {
-            Text("아직 발자취가 없어요.\n첫 발자취를 남겨볼까요?")
-                .multilineTextAlignment(.center)
-        } else {
-            ScrollView {
+        ScrollView {
+            if store.footsteps.isEmpty {
+                Text("아직 발자취가 없어요.\n첫 발자취를 남겨볼까요?")
+                    .multilineTextAlignment(.center)
+            } else {
                 LazyVStack {
                     ForEach(store.footsteps) { footsteps in
                         FeedCell(footstep: footsteps) { footstep in
@@ -32,9 +32,10 @@ public struct FeedListView: View {
                     }
                 }
             }
-            .onAppear {
-                store.send(.onAppear)
-            }
+        }
+        .navigationTitle("홈")
+        .onAppear {
+            store.send(.onAppear)
         }
     }
 }

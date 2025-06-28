@@ -21,8 +21,14 @@ struct FeedCell: View {
     var body: some View {
         VStack {
             HStack {
-                Text(footstep.userNickname)
-                    .font(.headline)
+                VStack(alignment: .leading) {
+                    Text(footstep.userNickname)
+                        .font(.system(size: 16))
+                    
+                    Text(footstep.presentedDate)
+                        .font(.system(size: 14))
+                        .foregroundStyle(Color.gray)
+                }
                 
                 Spacer()
                 
@@ -38,24 +44,22 @@ struct FeedCell: View {
             .padding(.horizontal, 15)
             .padding(.top, 15)
             
-            ZStack {
-                AsyncImage(url: footstep.imageUrl) { phase in
-                    switch phase {
-                    case .empty:
-                        Color.gray.opacity(0.1)
-                            .frame(height: 250)
-                    case .success(let image):
-                        image
-                            .resizable()
-                            .scaledToFill()
-                            .frame(height: 250)
-                            .clipped()
-                    case .failure:
-                        Image(systemName: "photo")
-                            .frame(height: 250)
-                    @unknown default:
-                        EmptyView()
-                    }
+            AsyncImage(url: footstep.imageUrl) { phase in
+                switch phase {
+                case .empty:
+                    Color.gray.opacity(0.1)
+                        .frame(height: 250)
+                case .success(let image):
+                    image
+                        .resizable()
+                        .scaledToFill()
+                        .frame(height: 250)
+                        .clipped()
+                case .failure:
+                    Image(systemName: "photo")
+                        .frame(height: 250)
+                @unknown default:
+                    EmptyView()
                 }
             }
             

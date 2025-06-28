@@ -11,14 +11,14 @@ import Foundation
 public struct Profile {
     let id: Int
     public let nickname: String
-    let email: String
+    let email: String?
     public let totalFootstepCount: Int
     public let footstepStreakDays: Int
     
     public init(
         id: Int = 0,
         nickname: String = "",
-        email: String = "",
+        email: String? = nil,
         totalFootstepCount: Int = 0,
         footstepStreakDays: Int = 0
     ) {

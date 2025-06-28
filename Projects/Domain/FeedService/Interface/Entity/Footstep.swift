@@ -14,6 +14,12 @@ public struct Footstep: Identifiable {
     public let createdAt: Date
     public let imageUrl: URL?
     public let content: String?
+    
+    public var presentedDate: String {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy-MM-dd"
+        return formatter.string(from: createdAt)
+    }
 }
 
 extension Footstep {

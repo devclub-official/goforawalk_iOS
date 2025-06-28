@@ -57,6 +57,10 @@ public struct ProfileView: View {
             
             Spacer()
         }
+        .navigationTitle("프로필")
+        .onAppear {
+            store.send(.onAppear)
+        }
     }
 }
 
