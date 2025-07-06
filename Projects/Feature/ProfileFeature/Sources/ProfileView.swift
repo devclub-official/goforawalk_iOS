@@ -7,10 +7,11 @@
 //
 
 import ComposableArchitecture
+import DesignSystem
 import SwiftUI
 
 public struct ProfileView: View {
-    private var store: StoreOf<ProfileFeature>
+    @Bindable private var store: StoreOf<ProfileFeature>
     
     public init(store: StoreOf<ProfileFeature>) {
         self.store = store
@@ -18,13 +19,22 @@ public struct ProfileView: View {
     
     public var body: some View {
         VStack {
+            NavigationBar(
+                title: "프로필",
+                trailingItems: [
+                    .systemImage("gear", color: .black) {
+                        store.send(.navigateToSettings)
+                    }
+                ]
+            )
+            
             HStack {
                 Text(store.profile.nickname)
                     .font(.system(size: 16))
                     .bold()
                 
                 Button {
-                    print("닉네임 변경")
+                    store.send(.navigateToChangeNickname)
                 } label: {
                     Image(systemName: "pencil.line")
                         .foregroundStyle(.black)
@@ -57,7 +67,7 @@ public struct ProfileView: View {
             
             Spacer()
         }
-        .navigationTitle("프로필")
+        .toolbar(.hidden)
         .onAppear {
             store.send(.onAppear)
         }

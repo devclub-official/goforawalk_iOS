@@ -8,7 +8,7 @@
 
 import Foundation
 
-public struct Profile {
+public struct Profile: Equatable {
     let id: Int
     public let nickname: String
     let email: String?
@@ -27,5 +27,9 @@ public struct Profile {
         self.email = email
         self.totalFootstepCount = totalFootstepCount
         self.footstepStreakDays = footstepStreakDays
+    }
+    
+    static public func == (lhs: Profile, rhs: Profile) -> Bool {
+        lhs.id == rhs.id
     }
 }

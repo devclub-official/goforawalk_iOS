@@ -14,8 +14,9 @@ import UserService
 @Reducer
 public struct ProfileFeature {
     @ObservableState
-    public struct State {
+    public struct State: Equatable {
         var profile: Profile = .init()
+        var path: StackState<Path.State> = .init()
         
         public init() {}
     }
@@ -23,7 +24,15 @@ public struct ProfileFeature {
     public enum Action {
         case onAppear
         case fetchProfile(Profile)
-        case changeNicknameButtonTapped
+        case path(StackAction<Path.State, Path.Action>)
+        case navigateToSettings
+        case navigateToChangeNickname
+    }
+    
+    @Reducer(state: .equatable)
+    public enum Path {
+        case settings
+        case changeNickname
     }
     
     @Dependency(\.profileClient) var profileClient
@@ -43,7 +52,17 @@ public struct ProfileFeature {
                 state.profile = profile
                 return .none
                 
-            case .changeNicknameButtonTapped:
+            case .path:
+                return .none
+                
+            case .navigateToSettings:
+                print("navigationToSettings")
+//                state.path.append(.settings(SettingsFeature.State()))
+                return .none
+                
+            case .navigateToChangeNickname:
+                print("navigateToChangeNickname")
+//                state.path.append(.changeNickname(ChangeNicknameFeature.State()))
                 return .none
             }
         }
