@@ -46,14 +46,12 @@ public struct MainTabView: View {
                 MainTab.profile.title,
                 systemImage: MainTab.profile.imageName
             ) {
-                NavigationStack {
-                    ProfileView(
-                        store: store.scope(
-                            state: \.profile,
-                            action: \.profile
-                        )
+                ProfileView(
+                    store: store.scope(
+                        state: \.profile,
+                        action: \.profile
                     )
-                }
+                )
             }
         }
     }

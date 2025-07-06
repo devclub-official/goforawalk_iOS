@@ -8,6 +8,7 @@
 
 import ComposableArchitecture
 import DesignSystem
+import SettingsFeature
 import SwiftUI
 
 public struct ProfileView: View {
@@ -18,54 +19,61 @@ public struct ProfileView: View {
     }
     
     public var body: some View {
-        VStack {
-            NavigationBar(
-                title: "프로필",
-                trailingItems: [
-                    .systemImage("gear", color: .black) {
-                        store.send(.navigateToSettings)
-                    }
-                ]
-            )
-            
-            HStack {
-                Text(store.profile.nickname)
-                    .font(.system(size: 16))
-                    .bold()
+        NavigationStackStore(store.scope(state: \.path, action: \.path)) {
+            VStack {
+                NavigationBar(
+                    title: "프로필",
+                    trailingItems: [
+                        .systemImage("gear", color: .black) {
+                            store.send(.navigateToSettings)
+                        }
+                    ]
+                )
                 
-                Button {
-                    store.send(.navigateToChangeNickname)
-                } label: {
-                    Image(systemName: "pencil.line")
-                        .foregroundStyle(.black)
-                }
-            }
-            .padding(.vertical, 25)
-            
-            HStack {
-                VStack {
-                    Text("\(store.profile.totalFootstepCount)")
-                        .font(.system(size: 22))
+                HStack {
+                    Text(store.profile.nickname)
+                        .font(.system(size: 16))
                         .bold()
-                        .italic()
                     
-                    Text("발자취 개수")
+                    Button {
+                        print("닉네임 변경")
+                    } label: {
+                        Image(systemName: "pencil.line")
+                            .foregroundStyle(.black)
+                    }
+                }
+                .padding(.vertical, 25)
+                
+                HStack {
+                    VStack {
+                        Text("\(store.profile.totalFootstepCount)")
+                            .font(.system(size: 22))
+                            .bold()
+                            .italic()
+                        
+                        Text("발자취 개수")
+                    }
+                    
+                    Spacer()
+                        .frame(width: 50)
+                    
+                    VStack {
+                        Text("\(store.profile.footstepStreakDays)")
+                            .font(.system(size: 22))
+                            .bold()
+                            .italic()
+                        
+                        Text("연속 발자취")
+                    }
                 }
                 
                 Spacer()
-                    .frame(width: 50)
-                
-                VStack {
-                    Text("\(store.profile.footstepStreakDays)")
-                        .font(.system(size: 22))
-                        .bold()
-                        .italic()
-                    
-                    Text("연속 발자취")
-                }
             }
-            
-            Spacer()
+        } destination: { store in
+            switch store.case {
+            case .settings(let settingsStore):
+                SettingsView(store: settingsStore)
+            }
         }
         .toolbar(.hidden)
         .onAppear {

@@ -12,6 +12,7 @@ let project = Project.module(
             module: .feature(.ProfileFeature),
             dependencies: [
                 .feature(target: .ProfileFeature, type: .interface),
+                .feature(target: .SettingsFeature),
                 .domain(target: .UserService, type: .interface),
                 .domain(target: .UserService),
                 .userInterface(target: .DesignSystem)

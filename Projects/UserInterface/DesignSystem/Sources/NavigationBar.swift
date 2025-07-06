@@ -10,18 +10,30 @@ import SwiftUI
 
 public struct NavigationBar: View {
     let title: String
+    let leadingItems: [NavigationHeaderItem]
     let trailingItems: [NavigationHeaderItem]
     
     public init(
         title: String,
+        leadingItems: [NavigationHeaderItem] = [],
         trailingItems: [NavigationHeaderItem] = []
     ) {
         self.title = title
+        self.leadingItems = leadingItems
         self.trailingItems = trailingItems
     }
     
     public var body: some View {
         HStack(spacing: 16) {
+            HStack(spacing: 12) {
+                ForEach(leadingItems) { item in
+                    Button(action: item.action) {
+                        item.content
+                    }
+                    .buttonStyle(.plain)
+                }
+            }
+            
             Text(title)
                 .font(.title)
                 .bold()

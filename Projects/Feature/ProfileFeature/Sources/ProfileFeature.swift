@@ -8,6 +8,7 @@
 
 import ComposableArchitecture
 import Foundation
+import SettingsFeature
 import UserServiceInterface
 import UserService
 
@@ -26,13 +27,11 @@ public struct ProfileFeature {
         case fetchProfile(Profile)
         case path(StackAction<Path.State, Path.Action>)
         case navigateToSettings
-        case navigateToChangeNickname
     }
     
     @Reducer(state: .equatable)
     public enum Path {
-        case settings
-        case changeNickname
+        case settings(SettingsFeature)
     }
     
     @Dependency(\.profileClient) var profileClient
@@ -56,15 +55,10 @@ public struct ProfileFeature {
                 return .none
                 
             case .navigateToSettings:
-                print("navigationToSettings")
-//                state.path.append(.settings(SettingsFeature.State()))
-                return .none
-                
-            case .navigateToChangeNickname:
-                print("navigateToChangeNickname")
-//                state.path.append(.changeNickname(ChangeNicknameFeature.State()))
+                state.path.append(.settings(SettingsFeature.State()))
                 return .none
             }
         }
+        .forEach(\.path, action: \.path)
     }
 }
