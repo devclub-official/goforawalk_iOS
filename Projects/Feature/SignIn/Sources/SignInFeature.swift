@@ -8,6 +8,7 @@
 
 import Auth
 import AuthInterface
+import AuthenticationServices
 import ComposableArchitecture
 import GlobalThirdPartyLibrary
 import KakaoSDKAuth
@@ -31,7 +32,8 @@ public struct SignInFeature {
         case kakaoSignInButtonTapped
         case signInWithKakakoResponse(AuthInterface.Token, AuthInterface.User)
         case signInWithKakaoError(Error)
-        // TODO: - Apple login
+        case signInWithAppleCredential(String)
+        case signInWithAppleError(Error)
         
         @CasePathable
         public enum Alert {
@@ -47,9 +49,9 @@ public struct SignInFeature {
         Reduce { state, action in
             switch action {
             case .checkAuthorization:
-                if KeyChainStore.shared.validateToken() {
-                    return .send(.isAlreadyAuthorized)
-                }
+//                if KeyChainStore.shared.validateToken() {
+//                    return .send(.isAlreadyAuthorized)
+//                }
                 return .none
                 
             case .kakaoSignInButtonTapped:
@@ -101,6 +103,28 @@ public struct SignInFeature {
                     }, message: {
                         TextState(error.localizedDescription)
                     })
+                return .none
+                
+            case let .signInWithAppleCredential(identityToken):
+                print("\(identityToken)")
+                return .none
+                
+            case let .signInWithAppleError(error):
+                state.isLoading = false
+                state.alert = AlertState(
+                    title: {
+                        TextState("알림")
+                    }, actions: {
+                        ButtonState {
+                            TextState("확인")
+                        }
+                    }, message: {
+                        TextState(error.localizedDescription)
+                    })
+                return .none
+                
+            case .isAlreadyAuthorized:
+                state.isLoading = false
                 return .none
                 
             default:

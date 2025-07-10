@@ -6,6 +6,7 @@
 //  Copyright © 2025 com.gaeng2y. All rights reserved.
 //
 
+import AuthenticationServices
 import ComposableArchitecture
 import SwiftUI
 
@@ -29,6 +30,17 @@ public struct SignInView: View {
                 store.send(.kakaoSignInButtonTapped)
             } label: {
                 Text("카카오 로그인")
+            }
+            
+            SignInWithAppleButton { request in
+                request.requestedScopes = [.email]
+            } onCompletion: { result in
+                switch result {
+                case .success(let authResult):
+                    store.send(.signInWithAppleCredential(authResult.description))
+                case .failure(let error):
+                    store.send(.signInWithAppleError(error))
+                }
             }
         }
         .padding(.vertical, 20)
