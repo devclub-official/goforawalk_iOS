@@ -57,7 +57,7 @@ public struct SignInFeature {
             case .kakaoSignInButtonTapped:
                 state.isLoading = true
                 
-                return .run { send in
+                return .run { @MainActor send in
                     do {
                         let oauthToken: OAuthToken? = try await withCheckedThrowingContinuation { continuation in
                             if UserApi.isKakaoTalkLoginAvailable() {
