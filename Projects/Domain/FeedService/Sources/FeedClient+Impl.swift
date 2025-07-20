@@ -21,6 +21,10 @@ extension FeedClient: DependencyKey {
         deleteFootstep: { id in
             let endpoint = FeedEndpoint.deleteFoorstep(with: id)
             _ = try await NetworkProviderImpl.shared.request(endpoint)
+        },
+        createFootstep: { body in
+            let endpoint = FeedEndpoint.createFootstep(with: body)
+            return try await NetworkProviderImpl.shared.request(endpoint)
         }
     )
 }
@@ -30,12 +34,14 @@ extension FeedClient: TestDependencyKey {
         fetchFootsteps: {
             return [.mock, .mock, .mock, .mock, .mock]
         },
-        deleteFootstep: unimplemented("\(Self.self).deleteFootstep")
+        deleteFootstep: unimplemented("\(Self.self).deleteFootstep"),
+        createFootstep: unimplemented("\(Self.self).createFootstep")
     )
     
     public static let testValue = Self(
         fetchFootsteps: unimplemented("\(Self.self).fetchFootsteps"),
-        deleteFootstep: unimplemented("\(Self.self).deleteFootstep")
+        deleteFootstep: unimplemented("\(Self.self).deleteFootstep"),
+        createFootstep: unimplemented("\(Self.self).createFootstep")
     )
 }
 

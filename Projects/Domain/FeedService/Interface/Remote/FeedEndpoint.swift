@@ -26,4 +26,40 @@ public struct FeedEndpoint {
             headers: ["Authorization": "Bearer \(LocalAuthStoreImpl().loadToken().accessToken)"]
         )
     }
+    
+    public static func createFootstep(with body: CreateFootstepRequestDTO) -> EndPoint<Footstep> {
+        let boundary = "Boundary-\(UUID().uuidString)"
+        let headers = [
+            "Content-Type": "multipart/form-data; boundary=\(boundary)",
+            "Authorization": "Bearer \(LocalAuthStoreImpl().loadToken().accessToken)"
+        ]
+        
+        let httpBody = createBody(with: body, boundary: boundary)
+        
+        return EndPoint(
+            path: "footsteps",
+            httpMethod: .post,
+            bodyParameters: httpBody,
+            headers: headers
+        )
+    }
+    
+    private static func createBody(with body: CreateFootstepRequestDTO, boundary: String) -> Data {
+        var httpBody = Data()
+        
+        httpBody.append(Data("--\(boundary)\r\n".utf8))
+        httpBody.append(Data("Content-Disposition: form-data; name=\"data\"; filename=\"image.jpg\"\r\n".utf8))
+        httpBody.append(Data("Content-Type: image/jpeg\r\n\r\n".utf8))
+        httpBody.append(body.image)
+        httpBody.append(Data("\r\n".utf8))
+        
+        httpBody.append(Data("--\(boundary)\r\n".utf8))
+        httpBody.append(Data("Content-Disposition: form-data; name=\"content\"\r\n\r\n".utf8))
+        httpBody.append(Data(body.content.utf8))
+        httpBody.append(Data("\r\n".utf8))
+        
+        httpBody.append(Data("--\(boundary)--\r\n".utf8))
+        
+        return httpBody
+    }
 }

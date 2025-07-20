@@ -11,12 +11,15 @@ import Foundation
 public struct FeedClient {
     public var fetchFootsteps: @Sendable () async throws -> [Footstep]
     public var deleteFootstep: @Sendable (Int) async throws -> Void
+    public var createFootstep: @Sendable (CreateFootstepRequestDTO) async throws -> Footstep
     
     public init(
         fetchFootsteps: @escaping @Sendable () async throws -> [Footstep],
-        deleteFootstep: @escaping @Sendable (Int) async throws -> Void
+        deleteFootstep: @escaping @Sendable (Int) async throws -> Void,
+        createFootstep: @escaping @Sendable (CreateFootstepRequestDTO) async throws -> Footstep
     ) {
         self.fetchFootsteps = fetchFootsteps
         self.deleteFootstep = deleteFootstep
+        self.createFootstep = createFootstep
     }
 }
