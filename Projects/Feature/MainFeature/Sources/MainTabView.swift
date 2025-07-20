@@ -7,12 +7,16 @@
 //
 
 import ComposableArchitecture
+import DesignSystem
 import FeedFeature
 import ProfileFeature
+import RecordFeature
 import SwiftUI
 
 public struct MainTabView: View {
     private let store: StoreOf<MainTabFeature>
+    @State private var showingCamera = false
+    @State private var selectedImage: UIImage?
     
     public init(store: StoreOf<MainTabFeature>) {
         self.store = store
@@ -35,11 +39,10 @@ public struct MainTabView: View {
             }
             
             Tab(MainTab.record.title, systemImage: MainTab.record.imageName) {
-                ScrollView {
-                    List([1, 2, 3, 4, 5, 6, 7, 8, 9, 10], id: \.self) { number in
-                        Text("\(number)")
+                Text("발자취 등록")
+                    .onAppear {
+                        showingCamera = true
                     }
-                }
             }
             
             Tab(
@@ -53,6 +56,10 @@ public struct MainTabView: View {
                     )
                 )
             }
+        }
+        .fullScreenCover(isPresented: $showingCamera) {
+//            RecordView()
+            CustomCameraView()
         }
     }
 }

@@ -27,7 +27,7 @@ public struct FeedEndpoint {
         )
     }
     
-    public static func createFootstep(with body: CreateFootstepRequestDTO) -> EndPoint<Footstep> {
+    public static func createFootstep(with body: CreateFootstepRequestDTO) -> EndPoint<FootstepsResponseDTO> {
         let boundary = "Boundary-\(UUID().uuidString)"
         let headers = [
             "Content-Type": "multipart/form-data; boundary=\(boundary)",
