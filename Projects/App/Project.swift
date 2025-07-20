@@ -25,6 +25,7 @@ let targets: [Target] = [
         infoPlist: .file(path: "Support/Info.plist"),
         sources: ["Sources/**"],
         resources: ["Resources/**"],
+        entitlements: .file(path: .path("Support/GoForAWalk.entitlements")),
         scripts: scripts,
         dependencies: [
             .feature(target: .SignIn),
