@@ -1,6 +1,6 @@
 //
 //  CameraService.swift
-//  RecordFeature
+//  Camera
 //
 //  Created by Kyeongmo Yang on 7/20/25.
 //  Copyright © 2025 com.gaeng2y. All rights reserved.
@@ -16,14 +16,16 @@ public final class CameraService {
     var delegate : AVCapturePhotoCaptureDelegate? // 진행 상황을 모니터링하고 사진 캡처 출력에서 ​​결과를 수신하는 방법입니다.
     
     // 카메라 뷰에 넣을 대리인
-    let output = AVCapturePhotoOutput()
+    public let output = AVCapturePhotoOutput()
     // 미리 보기 레이어, 이 미리보기 레이어가 UIViewController에 추가될 예정
-    let previewLayer = AVCaptureVideoPreviewLayer()
+    public let previewLayer = AVCaptureVideoPreviewLayer()
     
     // 여기까지 캡쳐 서비스에 필요한 조건들
     
+    public init() {}
+    
     // 실행시켰을떄 권한을 확인하기 위함
-    func start(
+    public func start(
         delegate: AVCapturePhotoCaptureDelegate,
         completion: @escaping (Error?) -> ()
     ){
@@ -113,7 +115,7 @@ public final class CameraService {
     }
     
     // setting을 기본값으로 해준다.
-    func capturePhoto(with settings : AVCapturePhotoSettings = AVCapturePhotoSettings()){
+    public func capturePhoto(with settings : AVCapturePhotoSettings = AVCapturePhotoSettings()){
         // 기본 셋팅과 대리인을 전달한다
         output.capturePhoto(with: settings, delegate: delegate!)
     }

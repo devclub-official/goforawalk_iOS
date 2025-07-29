@@ -44,6 +44,7 @@ public extension ModulePaths {
 
 public extension ModulePaths {
     enum Core: String, MicroTargetPathConvertable {
+        case Camera
         case Network
         case KeyChainStore
     }
