@@ -32,7 +32,7 @@ public struct SignInFeature {
         case kakaoSignInButtonTapped
         case signInWithKakakoResponse(AuthInterface.Token, AuthInterface.User)
         case signInWithKakaoError(Error)
-        case signInWithAppleCredential(String)
+        case signInWithAppleCredential(ASAuthorization)
         case signInWithAppleError(Error)
         
         @CasePathable
@@ -105,9 +105,19 @@ public struct SignInFeature {
                     })
                 return .none
                 
-            case let .signInWithAppleCredential(identityToken):
-                print("\(identityToken)")
-                return .none
+            case let .signInWithAppleCredential(authorization):
+                state.isLoading = true
+                
+                return .run { send in
+                    if let credential = authorization.credential as? ASAuthorizationAppleIDCredential,
+                       let identityToken = credential.identityToken {
+                        let (token, _) = try await authClient.signIn(.apple, String(data: identityToken, encoding: .utf8) ?? "")
+                        authClient.saveToken(token)
+                        await send(.isAlreadyAuthorized)
+                    } else {
+                        await send(.signInWithAppleError(NSError(domain: "AppleSignInError", code: 999)))
+                    }
+                }
                 
             case let .signInWithAppleError(error):
                 state.isLoading = false
