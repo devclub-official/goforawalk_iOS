@@ -11,13 +11,17 @@ let project = Project.module(
         .implements(
             module: .feature(.RecordFeature),
             dependencies: [
-                .feature(target: .RecordFeature, type: .interface)
+                .feature(target: .RecordFeature, type: .interface),
+                .domain(target: .CameraService, type: .interface),
+                .domain(target: .CameraService),
+                .domain(target: .FeedService, type: .interface),
+                .domain(target: .FeedService),
             ]
         ),
         .testing(
             module: .feature(.RecordFeature),
             dependencies: [
-                .feature(target: .RecordFeature, type: .interface)
+                .feature(target: .RecordFeature, type: .interface),
             ]
         ),
         .tests(

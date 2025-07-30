@@ -36,6 +36,7 @@ public extension ModulePaths {
 
 public extension ModulePaths {
     enum Domain: String, MicroTargetPathConvertable {
+        case CameraService
         case UserService
         case FeedService
         case Auth

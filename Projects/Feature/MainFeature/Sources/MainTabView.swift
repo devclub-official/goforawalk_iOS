@@ -15,8 +15,6 @@ import SwiftUI
 
 public struct MainTabView: View {
     private let store: StoreOf<MainTabFeature>
-    @State private var showingCamera = false
-    @State private var selectedImage: UIImage?
     
     public init(store: StoreOf<MainTabFeature>) {
         self.store = store
@@ -39,9 +37,9 @@ public struct MainTabView: View {
             }
             
             Tab(MainTab.record.title, systemImage: MainTab.record.imageName) {
-                Text("발자취 등록")
+                Text("등록")
                     .onAppear {
-                        showingCamera = true
+                        store.send(.presentCaptureImage)
                     }
             }
             
@@ -57,9 +55,16 @@ public struct MainTabView: View {
                 )
             }
         }
-        .fullScreenCover(isPresented: $showingCamera) {
-//            RecordView()
-            CustomCameraView()
+        .fullScreenCover(store: self.store.scope(
+            state: \.$usingCamera,
+            action: \.usingCamera)
+        ) { store in
+            NavigationStack {
+                CaptureImageView(store: store)
+            }
+        }
+        .transaction { transaction in
+            transaction.disablesAnimations = store.disableDismissAnimation
         }
     }
 }
