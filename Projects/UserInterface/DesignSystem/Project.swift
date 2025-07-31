@@ -7,10 +7,14 @@ let project = Project.module(
     targets: [
         .implements(
             module: .userInterface(.DesignSystem),
-            product: .framework
+            product: .framework,
+            spec: .init(resources: ["Resources/**"])
         ),
         .demo(module: .userInterface(.DesignSystem), dependencies: [
             .userInterface(target: .DesignSystem)
         ])
+    ],
+    resourceSynthesizers: [
+        .assets()
     ]
 )

@@ -81,5 +81,7 @@
 	</array>
 	<key>NSCameraUsageDescription</key>
 	<string>사진을 촬영하기 위해 카메라 접근이 필요합니다.</string>
+	<key>UIUserInterfaceStyle</key>
+	<string>Light</string>
 </dict>
 </plist>
