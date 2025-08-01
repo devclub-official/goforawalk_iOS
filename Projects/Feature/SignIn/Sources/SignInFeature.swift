@@ -49,9 +49,9 @@ public struct SignInFeature {
         Reduce { state, action in
             switch action {
             case .checkAuthorization:
-//                if KeyChainStore.shared.validateToken() {
-//                    return .send(.isAlreadyAuthorized)
-//                }
+                if KeyChainStore.shared.validateToken() {
+                    return .send(.isAlreadyAuthorized)
+                }
                 return .none
                 
             case .kakaoSignInButtonTapped:

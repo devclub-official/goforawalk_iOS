@@ -50,8 +50,8 @@ public struct SignInView: View {
                         request.requestedScopes = [.email]
                     } onCompletion: { result in
                         switch result {
-                        case .success(let authResult):
-                            store.send(.signInWithAppleCredential(authResult.description))
+                        case .success(let authorization):
+                            store.send(.signInWithAppleCredential(authorization))
                         case .failure(let error):
                             store.send(.signInWithAppleError(error))
                         }
